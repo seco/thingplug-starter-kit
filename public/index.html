@@ -1,56 +1,225 @@
 <html>
   <head>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="http://d3js.org/d3.v2.js"></script>
-    <script src="./js/app.js"></script>
-    <title>ThingPlug - Smart Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style>
+	  #map {
+		width: 100%;
+		height: 350;
+		margin: 0;
+	  }
+	 #cell {display:table-cell; vertical-align:middle;} 
+.nav ul {
+
+  background-color: #ea002c;
+
+}
+.jumbotron{
+    width:100%;
+    height: auto;
+    background-color:#f39c12;
+    padding:0px;
+    margin:0px;
+    opacity: 0.7;
+}
+
+.foot { 
+height: auto; 
+background: #3c3c3c; 
+} 
+	</style>
+
+	<link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="http://d3js.org/d3.v2.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"
+		 async defer></script>
+	<script src="./js/app.js"></script>
+	<title>ThingPlug - LoRa WAN</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   </head>
   <script>
   </script>
-    <body>
-      <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <div class="logo">
-              <img alt="Brand" class="navbar-brand-logo" src="https://www.sp1.sktiot.com/asset/icon/36.png">
-            </div>
+	<body style="background-image : url(http://designers-tips.com/wp-content/uploads/2012/06/karafurudot3.jpg); background-size : 100% 100%">
+	  <div class="nav">
+      <ul>
+		<div class="container">
+		  <div class="navbar-header">
+			<div class="logo">
+              <a href="http://thingplug.sktiot.com/" style="font-size:2em; color : gray">
+              <img alt="Brand" class="navbar-brand-logo" src="https://openhw.sp1.sktiot.com/asset/custom/logo.png"></a>
+			</div>
+            
+		  </div>
+		  
+			
+		</div>
+        </ul>
+	  </div>
+	  <div class="container">
+		        <div class="jumbotron">
+          <h2>Band LoRa StarterKit</h2>
+          <p>An Example Web Application that utilizes the ThingPlug Standardized APIs and LoRa Network</p>
+        </div>
+        
+		<h1 class="page-header" align="center"> Device Status Monitoring </h1>
+
+		<div class="container" align="center" style="vertical-align: middle; ">
+		<div class="row" style="">
+		<div class="col-sm-6 col-md-12" style="background-color : lightGray; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/1/1176.svg" style="max-width: 100%; height: 30;">Device Information 
+			</div>
+			<font size="4">
+			<div class="row">
+				<div class="col-sm-2 col-xs-6" align="Right"> Device ID : </div>
+				<div class="col-sm-4"align="left" id="NodeID_value"> NodeID</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-2 col-xs-6"align="Right"> Firmware Ver : </div>
+				<div class="col-sm-4"align="left" id="FirmVer_value"> 0.1.0 </div>
+			</div>
+			</font>
+		</div>  
+        </div>
+        <br>
+		<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30">Sensor - Temperature
+				<img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row" style="color : #ea002c">
+				<div class="col-sm-6 col-xs-6" style="font-size:140; line-height: 200px; display:block;" id="temp_value">0</div>	
+				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px">&#x2103;</div>						
+			</div>
+		</div>
+		
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+            	<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - Humidity
+				<img src="http://image000.flaticon.com/icons/svg/120/120806.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row" style="color : #ea002c">
+				<div class="col-sm-6 col-xs-6" style="font-size:140; line-height: 200px" id="humid_value">0</div>
+				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px">%</div>		
+			</div>
+		</div>  
+
+
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - LUX
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+				<div class="row" style="color : #ea002c">
+				<div class="col-sm-6 col-xs-6" style="font-size:140; " id="lux_value">0</div>
+				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px;">lux</div>
+		  </div>			
+		  </div>
+            
+           </div> 
+           <br>
+		<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
+<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - Temperature
+				<img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30">
+			</div>
+          	<div id="graph_temp" class="graph_temp" style="max-width: 100%; height: 256; display:block;"></div>
+		  </div>  	
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - Humidity
+				<img src="http://image000.flaticon.com/icons/svg/120/120806.svg" style="max-width: 100%; height: 30">
+			</div>
+            <div id="graph_humid" class="graph_humid" style="max-width: 100%; height: 256; display:block;"></div>
+		  </div>  	
+          <div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - LUX
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+          	<div id="graph_lux" class="graph_lux" style="max-width: 100%; height: 256; display:block;"></div>
+		  </div>  	
           </div>
-          <ul class="nav navbar-nav">
-            <li><a href="http://thingplug.sktiot.com/" class="navbar-right">ThingPlug</a></li>
-          </ul>
-        </div>
-      </nav>
-      <div class="container">
-        <div class="jumbotron">
-          <h2>ThingPlug Starter Kit</h2>
-          <p>ThingPlug Starter Kit을 이용한 실시간 온도 모니터링 및 에어컨 제어 예제</p>
-        </div>
-        <h1 class="page-header"> 실시간 온도 모니터링 </h1>
-        <div class="row">
-          <div class="col-sm-2"> 온도값 </div>
-          <div class="col-sm-1" id="temp_value">0</div>
-          <div class="col-sm-2"> Celcius</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-2"> 측정 시간  </div>
-          <div class="col-sm-4" id="temp_time">... </div>
-        </div>
-        <h2 class="page-header"> 에어컨 제어 </h2>
-        <div class="control-btn-group">
-          <button type="button" id="ac_on_btn" class="btn btn-primary">On</button>
-          <button type="button" id="ac_off_btn" class="btn btn-default">Off</button>
-        </div>
-        <h2 class="page-header">Sensor Graph (1 sec)</h2>
-        <div class="row">
-          <div id="graph" class="graph"></div>
-        </div>
-      </div><!-- end of container -->
-    </body>
+          
+          <br>
+          
+          	<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 15px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Device Reset
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+
+			  <div class="row" align="center" style="background-color:gainsboro;">
+				 <font size="5">	
+                            <button type="button" style="max-width:max;height:auto" id="DevReset">Device Reset</button>
+				  </div>
+		</div>
+		
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Period Change
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+				<div class="row" style="bordar-radius : 10px;  border-color : gainsboro; border-width : 3; border-style : solid solid none solid;bordar-radius : 10px;  ">
+					<div class="col-sm-6 col-xs-6" style="background-color:gainsboro ">					
+						<input type="text" id="input_value" name="member_name" size="1px" value="1" >Sec</input>
+					</div>
+                    <div class="col-sm-6 col-xs-6" style="background-color:gainsboro">
+                    	<button type="button" style="width:auto ;height:auto" id="RepPerChange"> Change </button>	</div>
+					</div>		
+		</div>
+		
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Update
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row" style="background-color:gainsboro">
+<div class="row" align="center" style="display:inline; zoom:1; vertical-align: middle">	
+						<button type="button" style="width:200px;height:auto" id="RepImmediate">FirmWare U/D</button>	
+				</div>
+			</div>		
+		</div>
+		
+		</div>
+        <br>
+		<div class="row" style="background-color : white; border-color : lightgray; border-width : 5; border-style : solid;  border-radius: 15px; height: auto">   
+			<div class="col-sm-6 col-md-12" style="background-color : lightGray; height: auto"> 
+            <div class="row" style="font-size:20; border-color : lightgray; border-width : 5; border-style : none none solid none; border-radius: 15px;  " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/62/62516.svg" style="max-width: 100%; height: 30;">LoRa Device Location On Map
+			</div>
+            </div>
+		  <div id="map"></div>
+		  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+		async defer></script>
+		</div>    
+		
+	</div></div>
+	  <br>
+      <div class="foot"> <font size="0.5em" color="gray">
+<img src="https://openhw.sp1.sktiot.com/asset/footer/images/skt_logo.gif" style="max-width: 100%; height: auto;">
+&nbsp; &nbsp; 
+<a href="https://openhw.sp1.sktiot.com/#/about/terms">이용약관 | </a>
+<a href="mailto:thingplug.skt@gmail.com">문의하기</a>
+&nbsp; &nbsp; <a href="https://www.facebook.com/tdeveloper"><img src="https://openhw.sp1.sktiot.com/asset/footer/images/ico_facebook.gif" style="max-width: auto; height: auto;"></a> 
+&nbsp; &nbsp; <a href="https://www.youtube.com/channel/UCZnU_GW3lgeP5heMlt26x9Q"><img src="https://openhw.sp1.sktiot.com/asset/footer/images/ico_youtube.gif" style="max-width: auto; height: auto;"></a>
+<br><br>
+
+
+우편번호 : 100-999 서울특별시 중구 을지로 65(을지로2가) SK T-타워 SK텔레콤(주)<br>
+COPYRIGHT ⓒ SK TELECOM. LTD. ALL RIGHTS RESERVED.<br>
+</font>
+</div> 
+
+	</body>
   </html>

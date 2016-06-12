@@ -22,17 +22,19 @@ app.get('/data/:container', function(req,res) {
   var container = req.params.container;
   api.getLatestContainer(config.nodeID, container, function(err, data){
     if(err) return res.send(err);
-    else return res.send(data);
+    else return res.send(data.cin);
   });
 });
 
 app.post('/control', function(req,res) {
   var cmd = JSON.stringify(req.body);
-  api.reqMgmtCmd(config.nodeID, config.mgmtCmdPrefix, cmd, function(err, data){
+  console.log("{\"cmd\":\""+req.body.cmd+"\"}");
+  api.reqMgmtCmd(config.nodeID, req.body.cmt, "{\"cmd\":\""+req.body.cmd+"\"}", function(err, data){
     if(err) return res.send({'error':err});
     return res.send({'result':'ok'});
   });
 });
+
 
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
