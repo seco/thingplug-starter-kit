@@ -26,6 +26,53 @@
 height: auto; 
 background: #3c3c3c; 
 } 
+@font-face {
+    font-family: 'Moebius';
+    src: url(./Moebius_Regular_eng.ttf) format('truetype');
+}
+
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
+	box-shadow:inset 0px 1px 0px 0px #a4e271;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
+	background:-moz-linear-gradient(top, #89c403 5%, #77a809 100%);
+	background:-webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
+	background:-o-linear-gradient(top, #89c403 5%, #77a809 100%);
+	background:-ms-linear-gradient(top, #89c403 5%, #77a809 100%);
+	background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+	background-color:#89c403;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #74b807;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528009;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
+	background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
+	background:-webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
+	background:-o-linear-gradient(top, #77a809 5%, #89c403 100%);
+	background:-ms-linear-gradient(top, #77a809 5%, #89c403 100%);
+	background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
+	background-color:#77a809;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 	</style>
 
 	<link rel="stylesheet" href="./css/styles.css">
@@ -39,14 +86,16 @@ background: #3c3c3c;
 	<script src="https://maps.googleapis.com/maps/api/js"
 		 async defer></script>
 	<script src="./js/app.js"></script>
-	<title>ThingPlug - LoRa WAN</title>
+	<title>Band LoRa StarterKit</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
   </head>
   <script>
   </script>
-	<body style="background-image : url(http://designers-tips.com/wp-content/uploads/2012/06/karafurudot3.jpg); background-size : 100% 100%">
-	  <div class="nav">
+	<body style="font-family: Moebius">
+	   <!--background-image : url(http://designers-tips.com/wp-content/uploads/2012/06/karafurudot3.jpg); background-size : 100% 100%;-->
+      <div class="nav">
       <ul>
 		<div class="container">
 		  <div class="navbar-header">
@@ -61,7 +110,7 @@ background: #3c3c3c;
 		</div>
         </ul>
 	  </div>
-	  <div class="container">
+	  <div class="container" style="color:#1F2520">
 		        <div class="jumbotron">
           <h2>Band LoRa StarterKit</h2>
           <p>An Example Web Application that utilizes the ThingPlug Standardized APIs and LoRa Network</p>
@@ -80,9 +129,11 @@ background: #3c3c3c;
 				<div class="col-sm-2 col-xs-6" align="Right"> Device ID : </div>
 				<!--<div class="col-sm-4"align="left" id="NodeID_value"> NodeID</div>-->
                 <div class="col-sm-4" align="left" >
-                	<select name='fruits'>
-                        <option selected>-- Choice --</option>
-                        <option id="NodeID_value">NodeID</option>
+                	<select id='NODEID'>
+                        
+						<option >-- Choice --</option>
+                        <option id="NodeID_1" value=1 selected>NodeID_1</option>
+						<option id="NodeID_2" value=2>NodeID_2</option>
                         <option value='banana'>바나나</option>
                         <option value='lemon'>레몬</option>
 					</select>
@@ -97,113 +148,110 @@ background: #3c3c3c;
 		</div>  
         </div>
         <br>
-		<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
-		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30">Sensor - Temperature
-				<img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30">
+		<div class="row">
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto; margin:auto">   
+			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="https://raw.githubusercontent.com/SKT-ThingPlug/thingplug-starter-kit/master/images/sensor.png" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">sensor </font>Temperature  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30;"></div>
 			</div>
-			<div class="row" style="color : #ea002c">
-				<div class="col-sm-6 col-xs-6" style="font-size:140; line-height: 200px; display:block;" id="temp_value">0</div>	
-				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px">&#x2103;</div>						
+			<div class="row" style="color : #ea002c;  border-color : gainsboro; border-width : 2; border-style : none none solid none;">
+				<div class="col-sm-7 col-xs-7" style="font-size:140; line-height: 200px; text-align:right; text-shadow:2px 2px #8C8C8C" id="temp_value">0</div>	
+				<div class="col-sm-5 col-xs-5" style="font-size:100; color:black;line-height: 200px ; text-align:left; text-shadow:2px 2px #8C8C8C" >&#x2103;</div>					
 			</div>
+            <div id="graph_temp" class="graph_temp" style="max-width: 100%; height: 256; display:block;"></div>
 		</div>
 		
-		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-            	<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - Humidity
-				<img src="http://image000.flaticon.com/icons/svg/120/120806.svg" style="max-width: 100%; height: 30">
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto;  margin:auto">  
+        			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="https://raw.githubusercontent.com/SKT-ThingPlug/thingplug-starter-kit/master/images/sensor.png" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">sensor </font>Humidity  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://online.focusky.com/qfsz/hfwy/files/extfiles/ext_020151130222331720.png" style="max-width: 100%; height: 30;"></div>
 			</div>
-			<div class="row" style="color : #ea002c">
-				<div class="col-sm-6 col-xs-6" style="font-size:140; line-height: 200px" id="humid_value">0</div>
-				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px">%</div>		
+             
+			<div class="row" style="color : #ea002c; border-color : gainsboro; border-width : 2; border-style : none none solid none;">
+				<div class="col-sm-7 col-xs-7" style="font-size:140; line-height: 200px; text-align:right; text-shadow:2px 2px #8C8C8C" id="humid_value">0</div>
+				<div class="col-xs-5 col-xs-5" style="font-size:100; color:black; line-height: 200px ; text-align:left; text-shadow:2px 2px #8C8C8C">%</div>		
 			</div>
+            <div id="graph_humid" class="graph_humid" style="max-width: 100%; height: 256; display:block;"></div>
 		</div>  
 
 
-		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - LUX
-				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+		<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto;  margin:auto">  
+        
+        <div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="https://raw.githubusercontent.com/SKT-ThingPlug/thingplug-starter-kit/master/images/sensor.png" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">sensor </font>Brightness  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30;"></div>
 			</div>
-				<div class="row" style="color : #ea002c">
-				<div class="col-sm-6 col-xs-6" style="font-size:140; " id="lux_value">0</div>
-				<div class="col-sm-6 col-xs-6" style="font-size:100; line-height: 200px;">lux</div>
-		  </div>			
+             
+				<div class="row" style="color : #ea002c; border-color : gainsboro; border-width : 2; border-style : none none solid none">
+				<div class="col-sm-7 col-xs-7" style="font-size:140; text-align:right; text-shadow:2px 2px #8C8C8C" id="lux_value">0</div>
+				<div class="col-sm-5 col-xs-5" style="font-size:100; color:black; line-height: 200px; text-align:left; text-shadow:2px 2px #8C8C8C">lux</div>
+		  </div>
+          <div id="graph_lux" class="graph_lux" style="max-width: 100%; height: 256; display:block"></div>			
 		  </div>
             
            </div> 
-           <br>
-		<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
-<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - Temperature
-				<img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30">
-			</div>
-          	<div id="graph_temp" class="graph_temp" style="max-width: 100%; height: 256; display:block;"></div>
-		  </div>  	
-			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - Humidity
-				<img src="http://image000.flaticon.com/icons/svg/120/120806.svg" style="max-width: 100%; height: 30">
-			</div>
-            <div id="graph_humid" class="graph_humid" style="max-width: 100%; height: 256; display:block;"></div>
-		  </div>  	
-          <div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Graph - LUX
-				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
-			</div>
-          	<div id="graph_lux" class="graph_lux" style="max-width: 100%; height: 256; display:block;"></div>
-		  </div>  	
-          </div>
           
           <br>
           
-          	<div class="row"  style="background-color:gainsboro; border-radius: 15px; ">
-			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 15px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Device Reset
-				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+          	<div class="row">
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto">   
+	
+            
+            <div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">actuactor </font>Reset  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30;"></div>
 			</div>
 
 			  <div class="row" align="center" style="background-color:gainsboro;">
 				 <font size="5">	
-                            <button type="button" style="max-width:max;height:auto" id="DevReset">Device Reset</button>
+                           <!-- <button type="button" style="width:100%;height:auto" id="DevReset">Device Reset</button>-->
+                            <a class="myButton"id="DevReset" style="width:100%;height:auto">Device Reset</a>
+							
 				  </div>
 		</div>
 		
-			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Period Change
-				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto">   
+			            <div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">actuactor </font>Period  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30;"></div>
 			</div>
-				<div class="row" style="bordar-radius : 10px;  border-color : gainsboro; border-width : 3; border-style : solid solid none solid;bordar-radius : 10px;  ">
-					<div class="col-sm-6 col-xs-6" style="background-color:gainsboro ">					
-						<input type="text" id="input_value" name="member_name" size="1px" value="1" >Sec</input>
+            
+				<div class="row" style="background-color:gainsboro;  border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 5px;  ">
+					<div class="col-sm-6 col-xs-6" style="background-color:gainsboro">					
+						<input type="text" id="input_value" name="member_name" size="1px" value="1" style="height:font-size">Sec</input>
 					</div>
                     <div class="col-sm-6 col-xs-6" style="background-color:gainsboro">
-                    	<button type="button" style="width:auto ;height:auto" id="RepPerChange"> Change </button>	</div>
+                            <div class="row" align="center" style="background-color:gainsboro;">
+				 
+                            <a class="myButton"id="RepPerChange" style="width:100%;height:auto">Change</a>
+				  </div>
+                    </div>
 					</div>		
 		</div>
 		
-			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 10; border-style : solid; border-radius: 15px; height: auto">   
-			<div class="row" style="font-size:20; border-color : gainsboro; border-width : 5; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
-				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Update
-				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			<div class="col-sm-4" style="background-color : white; border-color : gainsboro; border-width : 2; border-style : solid; border-radius: 15px; height: auto">   
+			            <div class="row" style="font-size:20; border-color : gainsboro; border-width : 2; border-style : none none solid none;bordar-radius : 10px;  " align="left" >
+				<div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="width: 100%; height: 30"></div> 
+                 <div class="col-sm-8 col-xs-8"style="text-align : center"><font size="3">actuactor </font>Firmware  </div>
+                 <div class="col-sm-2 col-xs-2"><img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30;"></div>
 			</div>
 			<div class="row" style="background-color:gainsboro">
-<div class="row" align="center" style="display:inline; zoom:1; vertical-align: middle">	
-						<button type="button" style="width:200px;height:auto" id="RepImmediate">FirmWare U/D</button>	
+<div class="row" align="center" style="display:inline; zoom:1; vertical-align: middle">		
+                        <a class="myButton"id="RepImmediate" style="width:100%;height:auto">Update</a>
 				</div>
 			</div>		
 		</div>
-		
+		</font>
 		</div>
         <br>
-		<div class="row" style="background-color : white; border-color : lightgray; border-width : 5; border-style : solid;  border-radius: 15px; height: auto">   
-			<div class="col-sm-6 col-md-12" style="background-color : lightGray; height: auto"> 
-            <div class="row" style="font-size:20; border-color : lightgray; border-width : 5; border-style : none none solid none; border-radius: 15px;  " align="left" >
+		<div class="row" style="background-color : lightgray; border-color : lightgray; border-width : 2; border-style : solid;  border-radius: 15px; height: auto">   
+			<div class="col-sm-6 col-md-12" style="background-color : lightGray; height: auto;  border-color : lightgray; border-width : 2; border-style : none none solid none; border-radius: 15px;  "> 
+            <div class="row" style="font-size:20; border-color : lightgray; border-width : 2; border-style : none none solid none; border-radius: 15px;  " align="left" >
 				<img src="http://image000.flaticon.com/icons/svg/62/62516.svg" style="max-width: 100%; height: 30;">LoRa Device Location On Map
 			</div>
             </div>

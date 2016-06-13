@@ -1,6 +1,11 @@
+
 "use strict";
 
 jQuery(document).ready(function() {
+
+//var gauge = require('./gauge');
+//var d3js = require('http://mbostock.github.com/d3/d3.js');
+
 
   var data = [0];
   var data_humid = [0];
@@ -9,7 +14,8 @@ jQuery(document).ready(function() {
   var data_lux = [0];
   var Data_period = [0];
   var Data_Firm = [0];
-  var Data_NodeID = [0];
+  var Data_NodeID_1 = [0];
+  var Data_NodeID_2 = [0];
   
   
   var period = 1;
@@ -78,17 +84,18 @@ jQuery(document).ready(function() {
   
   var recent_ri = 0;
   var container_name = 'myContainer';
-  var nodeID = 'nodeID';
+  var nodeID_1 = 'nodeID_1';
+  var nodeID_2 = 'nodeID_2';
   
   var map = null;
   var valueLat = null;
   var valueLng = null;
   var valueAlt = null;
   
-  getConfig( function(err,config) {
-    if(data) container_name = config.containerName;
-	if(data) nodeID = config.nodeID;
-  });
+  // getConfig( function(err,config) {
+    // if(data) container_name = config.containerName;
+	// if(data) nodeID = config.nodeID;
+  // });
 
   function hextodec(hex) {
     var final = 0;
@@ -384,7 +391,12 @@ var marker2 = new google.maps.Marker({
  ///////////////////////////////////////////
 
   function getConfig(cb) {
-    var url = '/config';
+	  var nodeIndex = document.getElementById('NODEID').selectedIndex;
+	  if(nodeIndex==1)
+		var url = '/config_1';
+	  else if(nodeIndex==2)
+		var url = '/config_2';
+	
     $.get(url, function(data, status){
       if(status == 'success'){
         cb(null, data);
@@ -400,6 +412,7 @@ var marker2 = new google.maps.Marker({
  
   function getData(container, cb, timeValue, data_lux) {
     var url = '/data/' + container;
+	
     $.get(url, function(data, status){
       if(status == 'success'){
         var valuePrim = data.con;
@@ -438,7 +451,8 @@ var marker2 = new google.maps.Marker({
     //$('#estimatedTime')[0].innerText = time[0];
     $('#lux_value')[0].innerText = data_lux[0];
 	$('#FirmVer_value')[0].innerText = Data_Firm[0];
-	$('#NodeID_value')[0].innerText = Data_NodeID[0];
+	$('#NodeID_1')[0].innerText = Data_NodeID_1[0];
+	$('#NodeID_2')[0].innerText = Data_NodeID_2[0];
   }
   function insertNewData(value){
     if(data.length == MAX_DATA){
@@ -488,11 +502,17 @@ var marker2 = new google.maps.Marker({
     Data_Firm.splice(0,0,value);
   }
   
-      function insertNewData_NodeID(value){
-    if(Data_NodeID.length == MAX_DATA){
-      Data_NodeID.pop();
+      function insertNewData_NodeID_1(value){
+    if(Data_NodeID_1.length == MAX_DATA){
+      Data_NodeID_1.pop();
     }
-    Data_NodeID.splice(0,0,value);
+    Data_NodeID_1.splice(0,0,value);
+  }
+        function insertNewData_NodeID_2(value){
+    if(Data_NodeID_2.length == MAX_DATA){
+      Data_NodeID_2.pop();
+    }
+    Data_NodeID_2.splice(0,0,value);
   }
   
   function initToastOptions(){
@@ -538,12 +558,30 @@ var marker2 = new google.maps.Marker({
 	 //////////////////////////////////
     });
 	insertNewData_FrimVer(Firm_Ver);
-	insertNewData_NodeID(nodeID);
+	insertNewData_NodeID_1(nodeID_1);
+	
+	insertNewData_NodeID_2(nodeID_2);
 	//initMap();
     displayData();
     updategraph_temp();
 	updategraph_humid();
 	updategraph_lux();
+	
+	getConfig( function(err,config) {
+		if(data) container_name = config.containerName;
+		var nodeIndex = document.getElementById('NODEID').selectedIndex;
+		//nodeID_1 = config.nodeID;
+		if(data){
+			if(nodeIndex==1){
+				nodeID_1 = config.nodeID;
+			//insertNewData_NodeID_1(config.nodeID);
+			}
+			else if(nodeIndex==2){
+				nodeID_2 = config.nodeID;
+				//insertNewData_NodeID_2(config.nodeID);
+			}
+		}
+	});
   }, period*1000);
   
 
@@ -571,5 +609,55 @@ var marker2 = new google.maps.Marker({
 	  Firm_Ver = '1.0.0';
     });
   });
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/* 				
+			var gauges = [];
+			
+			function createGauge(name, label, min, max)
+			{
+				var config = 
+				{
+					size: 120,
+					label: label,
+					min: undefined != min ? min : 0,
+					max: undefined != max ? max : 100,
+					minorTicks: 5
+				}
+				
+				var range = config.max - config.min;
+				config.yellowZones = [{ from: config.min + range*0.75, to: config.min + range*0.9 }];
+				config.redZones = [{ from: config.min + range*0.9, to: config.max }];
+				
+				gauges[name] = new Gauge(name + "GaugeContainer", config);
+				gauges[name].render();
+			}
+			
+			function createGauges()
+			{
+				createGauge("memory", "Memory");
+				createGauge("cpu", "CPU");
+				createGauge("network", "Network");
+				//createGauge("test", "Test", -50, 50 );
+			}
+			
+			function updateGauges()
+			{
+				for (var key in gauges)
+				{
+					var value = getRandomValue(gauges[key])
+					gauges[key].redraw(value);
+				}
+			}
+			
+			function getRandomValue(gauge)
+			{
+				var overflow = 0; //10;
+				return gauge.config.min - overflow + (gauge.config.max - gauge.config.min + overflow*2) *  Math.random();
+			}
+			
+			function initialize()
+			{
+				createGauges();
+				setInterval(updateGauges, 5000);
+			} */
 });

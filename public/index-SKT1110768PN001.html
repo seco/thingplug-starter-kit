@@ -1,0 +1,178 @@
+<html>
+  <head>
+
+	<style>
+	  #map {
+		width: 100%;
+		height: 350;
+		margin: 0;
+	  }
+	 #cell {display:table-cell; vertical-align:middle;} 
+
+	</style>
+
+	<link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="http://d3js.org/d3.v2.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"
+		 async defer></script>
+	<script src="./js/app.js"></script>
+	<script src="../../"></script>
+	<title>ThingPlug - LoRa WAN</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  </head>
+  <script>
+  </script>
+	<body>
+	  <nav class="navbar navbar-inverse" role="navigation">
+		<div class="container">
+		  <div class="navbar-header">
+			<div class="logo">
+			  <img alt="Brand" class="navbar-brand-logo" src="https://www.sp1.sktiot.com/asset/icon/36.png">
+			</div>
+		  </div>
+		  <ul class="nav navbar-nav">
+			<li><a href="http://thingplug.sktiot.com/" class="navbar-right">ThingPlug</a></li>
+		  </ul>
+		</div>
+	  </nav>
+	  <div class="container">
+		<div class="jumbotron"  style="margin : 10px">
+		  <h2>LoRaWAN Network E2E Demostration</h2>
+		  <p>An Example Web Application that utilizes the ThingPlug Standardized APIs and LoRa Network</p>
+		</div>
+		<h1 class="page-header" align="center"> Device Status Monitoring </h1>
+
+		<div class="container" align="center" style="vertical-align: middle">
+		<div class="row" style="background-color : lightGray; border-color : white; border-width : 5; border-style : solid; height: 300">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/1/1176.svg" style="max-width: 100%; height: 30;">Device Information 
+			</div>
+			<font size="4">
+			<div class="row">
+				<div class="col-sm-6" align="right"> Device ID : </div>
+				<div class="col-sm-6"align="left"> 0.1.0 </div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-6"align="right"> Firmware Ver : </div>
+				<div class="col-sm-6"align="left"> 0.1.0 </div>
+			</div>
+			</font>
+		</div>  
+		<div class="row" >
+		<div class="col-sm-6" style="background-color : moccasin; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - Temperature
+				<img src="http://image000.flaticon.com/icons/svg/131/131593.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row">
+				<div class="col-sm-6"><div id="graph_temp" class="graph_temp" style="max-width: 100%; height: 256; display:block;"></div></div>
+				<div class="col-sm-4"><div class="row" style="font-size:140; line-height: 200px; display:block;" id="temp_value">0</div></div>	
+				<div class="col-sm-2" style="font-size:30; line-height: 200px">ºC</div>		
+				
+			</div>
+		</div>
+		
+
+		
+		
+		<div class="col-sm-6" style="background-color : moccasin; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - Humidity
+				<img src="http://image000.flaticon.com/icons/svg/120/120806.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row">
+				<div class="col-sm-4"><div id="graph" class="graph" style="max-width: 100%; height: 256;"></div></div>
+				<div class="col-sm-4"><div class="row" style="font-size:140; line-height: 200px" id="humid_value">0</div></div>	
+				<div class="col-sm-2" style="font-size:30; line-height: 200px">%</div>		
+			</div>
+		</div>  
+
+
+		<div class="col-sm-6" style="background-color : moccasin; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/120/120598.svg" style="max-width: 100%; height: 30;">Sensor - LUX
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+				<div class="row">
+				<div class="col-sm-4"><div id="graph" class="graph" style="max-width: 100%; height: 256;"></div></div>
+				<div class="col-sm-4"><div class="row" style="font-size:140; " id="lux_value">0</div></div>
+				<div class="col-sm-2" style="font-size:30; line-height: 200px;">lux</div>
+			</div>			
+		</div>  	
+
+		</div>
+		<div class="row" >
+		<div class="col-sm-6" style="background-color : #ffe4e1; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Device Reset
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+				<div class="row">
+					<div class="col-sm-4"> </div>
+					<div class="col-sm-4">
+						<div class="row" align="center" >
+							<font size="5">	
+							<div class="col-sm-4" style="display:inline; zoom:1; vertical-align: middle">	
+								<button type="button" style="width:200px;height:100px" id="DevReset">Device Reset</button>	
+							</div>
+						</div>
+					</div>
+				</div>		
+		</div>
+		
+		<div class="col-sm-6" style="background-color : #ffe4e1; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Period Change
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+				<div class="row">
+				<div class="col-sm-4"></div>
+					<div class="col-sm-4"> <button type="button" style="width:200px;height:100px" id="RepPerChange">Period Change </button>	</div>
+					<div class="col-sm-4" style="display:inline; zoom:1; vertical-align: middle; ">	
+						<font size="5">	
+						
+						<input type="text" id="input_value" name="member_name" size="1px" value="1" >Sec</input>
+						</font>
+					</div>
+				</div>		
+		</div>
+	
+		
+		<div class="col-sm-6" style="background-color : #ffe4e1; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/99/99086.svg" style="max-width: 100%; height: 30;">Actuactor - Firmware Update
+				<img src="http://image000.flaticon.com/icons/svg/148/148819.svg" style="max-width: 100%; height: 30">
+			</div>
+			<div class="row">
+				<div class="col-sm-4"></div>
+					<div class="row" align="center" >
+					<div class="col-sm-4" style="display:inline; zoom:1; vertical-align: middle">	
+						<button type="button" style="width:200px;height:100px" id="RepImmediate">FirmWare U/D</button>	
+					</div>
+				</div>
+			</div>		
+		</div>
+		
+		</div>
+		<div class="row" >
+		<div class="col-sm-6" style="background-color : lightcyan; border-color : white; border-width : 5; border-style : solid; height: auto">   
+			<div class="row" style="font-size:20; border-color : white; border-width : thin; border-style : none none solid none; " align="left" >
+				<img src="http://image000.flaticon.com/icons/svg/62/62516.svg" style="max-width: 100%; height: 30;">LoRa Device Location On Map
+			</div>
+		  <div id="map"></div>
+		  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+		async defer></script>
+		</div>    
+		</div>
+</div></div>
+	  
+	</body>
+  </html>
